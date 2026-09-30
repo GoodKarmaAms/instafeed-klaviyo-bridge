@@ -1,0 +1,13 @@
+{
+  "name": "@none/instafeed-klaviyo-bridge",
+  "version": "1.0.0",
+  "description": "**Option A — native static embed (no code, but not \"live\")** Instafeed's own docs describe a direct Klaviyo integration: on the **Pro plan**, go to Instafeed → Channels → \"Get embed code\", copy the HTML, paste it into an HTML block in the Klaviyo campaign editor. No API key, no Web Feed, no proxy. The catch: it's a snapshot — whatever images were live when you copied the code are what goes out. To refresh, you re-copy and re-paste before each send.",
+  "main": "worker.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}

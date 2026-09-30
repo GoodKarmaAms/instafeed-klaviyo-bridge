@@ -1,0 +1,26 @@
+<!--
+  Paste this into a Text block in the Klaviyo email editor via the <> Source
+  button, after enabling the "Instafeed" web feed on the campaign/flow
+  message (Data Feeds button at the bottom of the editor).
+
+  This is the same 3x3-grid pattern Klaviyo/Covet.pics document for any
+  web feed — it just points at feeds.Instafeed.items instead of
+  feeds.Covet.items, matching the JSON contract the bridge Worker returns.
+-->
+<table>
+  <tbody>
+    <tr>
+      {% for item in feeds.Instafeed.items|slice:"9" %}
+        <td style="width: 200px; height: 200px; background-image: url({{ item.images.medium_resolution }}); background-position: 50%; background-size: cover;">
+          <a href="{{ item.permalink }}" style="display:block;width:100%;height:100%;"></a>
+        </td>
+        {% if forloop.last %}
+          </tr>
+        {% else %}
+          {% if forloop.counter|divisibleby:"3" %}
+            </tr><tr>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    </tbody>
+</table>

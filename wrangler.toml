@@ -1,0 +1,32 @@
+name = "instafeed-klaviyo-bridge"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+
+# Optional: only needed if you want stale-while-error fallback (recommended).
+# Create it once with: wrangler kv namespace create FEED_KV
+# then paste the id it prints here.
+# [[kv_namespaces]]
+# binding = "FEED_KV"
+# id = "REPLACE_WITH_KV_NAMESPACE_ID"
+
+[vars]
+# All 4 values below come from: Shopify Admin -> Apps -> Instafeed ->
+# Channels -> Feed API card -> "API key".
+
+# "v6" if your Instagram is connected via Instagram Login, "v5" if via
+# Meta for Business. Confirmed v5 (Meta for Business) from the Feed API card.
+INSTAFEED_VERSION = "v5"
+
+# Confirmed via your test curl request.
+INSTAFEED_ACCOUNT = "fillingpieces.myshopify.com"
+
+# 0 = main feed — confirmed, starting here.
+INSTAFEED_FEED_ID = "0"
+
+# How many posts to pull each refresh — 9 fits the 3x3 grid snippet.
+INSTAFEED_LIMIT = "9"
+
+CACHE_TTL_SECONDS = "900"
+DEBUG_KEY = "changeme-debug-key"
+
+# Secret — set via `wrangler secret put INSTAFEED_API_KEY`, never commit it here.

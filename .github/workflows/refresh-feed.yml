@@ -1,0 +1,38 @@
+name: Refresh Instafeed data for Klaviyo
+
+on:
+  schedule:
+    # Every 15 minutes. GitHub may delay this under load — treat "every
+    # ~15 min" as a target, not a guarantee.
+    - cron: "*/15 * * * *"
+  workflow_dispatch: {} # lets you trigger a manual run from the Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Fetch Instafeed and write docs/feed.json
+        env:
+          INSTAFEED_API_KEY: ${{ secrets.INSTAFEED_API_KEY }}
+          INSTAFEED_VERSION: "v5"
+          INSTAFEED_ACCOUNT: "fillingpieces.myshopify.com"
+          INSTAFEED_FEED_ID: "0"
+          INSTAFEED_LIMIT: "9"
+        run: node scripts/fetch-feed.mjs
+
+      - name: Commit docs/feed.json if it changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/feed.json
+          git diff --cached --quiet || git commit -m "Refresh Instafeed data [skip ci]"
+          git push
